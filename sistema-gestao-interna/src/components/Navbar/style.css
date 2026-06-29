@@ -1,0 +1,47 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e293b; /* Um tom azul escuro bem profissional/corporativo */
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo {
+  color: #f8fafc;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.navbar-links button {
+  background: none;
+  border: none;
+  color: #94a3b8; /* Cor do texto padrão (desativado) */
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Efeito ao passar o mouse */
+.navbar-links button:hover {
+  color: #f8fafc;
+  background-color: #334155;
+}
+
+/* Estilo do botão quando a página está ativa */
+.navbar-links button.active {
+  color: #ffffff;
+  background-color: #007bff; /* Destaca a aba atual com o azul do sistema */
+  font-weight: 600;
+}
