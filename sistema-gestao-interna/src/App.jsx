@@ -1,36 +1,34 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
 import Clientes from './pages/Clientes';
+import Funcionarios from './pages/Funcionarios';
 import './App.css';
 
-// Importações temporárias de simulação (seus colegas vão substituir pelos componentes reais)
-const HomePlaceholder = () => <div style={{padding: '2rem', textAlign: 'center'}}><h2>Bem-vindo ao ERP Nexus</h2><p>Dashboard em desenvolvimento pelo integrante 2.</p></div>;
-const FuncionariosPlaceholder = () => <div style={{padding: '2rem', textAlign: 'center'}}><h2>Gestão de Funcionários</h2><p>Tela em desenvolvimento pelo integrante 3.</p></div>;
-
 function App() {
-  // Estado que controla qual página está visível no momento
+  // Estado que controla qual página está ativa e visível na tela
   const [view, setView] = useState('home');
 
-  // Função que renderiza a tela correta com base no estado 'view'
+  // Função dinâmica que renderiza a página selecionada na Navbar
   const renderView = () => {
     switch (view) {
       case 'home':
-        return <HomePlaceholder />; // Trocar por <Home /> quando seu colega terminar
+        return <Home />;
       case 'clientes':
         return <Clientes />;
       case 'funcionarios':
-        return <FuncionariosPlaceholder />; // Trocar por <Funcionarios /> quando seu colega terminar
+        return <Funcionarios />;
       default:
-        return <HomePlaceholder />;
+        return <Home />;
     }
   };
 
   return (
     <div className="app-container">
-      {/* Navbar fixa recebendo o controle de estado por Props */}
+      {/* Navbar que gerencia a troca de telas através do estado 'view' */}
       <Navbar currentView={view} setView={setView} />
       
-      {/* Conteúdo dinâmico da aplicação */}
+      {/* Container principal que exibe o componente ativo */}
       <main className="main-content">
         {renderView()}
       </main>
