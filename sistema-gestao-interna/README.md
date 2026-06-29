@@ -1,16 +1,27 @@
-# React + Vite
+# ERP Nexus - Sistema de Gestão Interna
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Projeto desenvolvido para a disciplina de [Nome da Disciplina].
 
-Currently, two official plugins are available:
+## 🚀 Como Rodar o Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Pró-requisitos
+* Java 21 instalado
+* MySQL rodando localmente
+* Node.js instalado
 
-## React Compiler
+### 1. Back-end (Spring Boot)
+1. Abra o projeto na pasta `sistema-gestao-interna-backend` usando sua IDE (IntelliJ/VS Code).
+2. Configure o seu usuário e senha do MySQL no arquivo `src/main/resources/application.properties`.
+3. Execute a classe `SistemaGestaoInternaBackendApplication.java`.
+4. O servidor iniciará em `http://localhost:8080`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 2. Front-end (React + Vite)
+1. Abra o terminal na pasta `SISTEMA-DE-GESTAO-INTERNA`.
+2. Instale as dependências executando: `npm install`
+3. Inicie o projeto com o comando: `npm run dev`
+4. Acesse no navegador o endereço indicado (ex: `http://localhost:5173`).
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Integrantes do projetoP:
+Luiz Gustavo Caldas Cruz: Frontend
+Italo de Jesus Silva: Frontend
+Anderson Ferreira: Backend
