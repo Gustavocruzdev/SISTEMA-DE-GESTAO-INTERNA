@@ -5,9 +5,11 @@ import './style.css';
 export default function Funcionarios() {
   const [funcionarios, setFuncionarios] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+
   const [error, setError] = useState('');
-  
-  // Estado para os campos do formulário
+  const [success, setSuccess] = useState('');
+
   const [formData, setFormData] = useState({
     nome: '',
     telefone: '',
@@ -16,10 +18,10 @@ export default function Funcionarios() {
     setor: ''
   });
 
-  // Função para buscar funcionários ao carregar a página
   const fetchFuncionarios = async () => {
     setLoading(true);
     setError('');
+
     try {
       const response = await api.get('/funcionarios');
       setFuncionarios(response.data);
@@ -35,64 +37,161 @@ export default function Funcionarios() {
     fetchFuncionarios();
   }, []);
 
-  // Atualiza o estado do formulário
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  // Envio do formulário (Cadastro)
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setError('');
-    
+    setSuccess('');
+    setSaving(true);
+
     try {
       await api.post('/funcionarios', formData);
-      // Limpa o formulário após o sucesso
-      setFormData({ nome: '', telefone: '', email: '', cargo: '', setor: '' });
-      // Atualiza a lista na tela
+
+      setFormData({
+        nome: '',
+        telefone: '',
+        email: '',
+        cargo: '',
+        setor: ''
+      });
+
+      setSuccess('Funcionário cadastrado com sucesso!');
+
       fetchFuncionarios();
-      alert('Funcionário cadastrado com sucesso!');
+
     } catch (err) {
       setError('Erro ao cadastrar funcionário. Verifique os dados e tente novamente.');
       console.error(err);
+    } finally {
+      setSaving(false);
     }
   };
 
   return (
     <div className="funcionarios-container">
-      <h2>Gestão de Funcionários</h2>
-      
-      {error && <div className="error-message">{error}</div>}
+
+      <h2> Gestão de Funcionários</h2>
+
+      <p className="subtitle">
+        Cadastre colaboradores e acompanhe todos os registros em um só lugar.
+      </p>
+
+      {error && (
+        <div className="alert alert-danger">
+          {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="alert alert-success">
+          {success}
+        </div>
+      )}
 
       <section className="form-section">
-        <h3>Cadastrar Novo Colaborador</h3>
-        <form onSubmit={handleSubmit} className="funcionario-form">
+
+        <h3> Novo Colaborador</h3>
+
+        <form onSubmit={handleSubmit}>
+
           <div className="input-group">
-            <input type="text" name="nome" placeholder="Nome Completo" value={formData.nome} onChange={handleInputChange} required />
-            <input type="email" name="email" placeholder="E-mail" value={formData.email} onChange={handleInputChange} required />
+
+            <input
+              type="text"
+              name="nome"
+              placeholder="Nome completo"
+              value={formData.nome}
+              onChange={handleInputChange}
+              autoComplete="name"
+              required
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="exemplo@email.com"
+              value={formData.email}
+              onChange={handleInputChange}
+              autoComplete="email"
+              required
+            />
+
           </div>
+
           <div className="input-group">
-            <input type="text" name="telefone" placeholder="Telefone" value={formData.telefone} onChange={handleInputChange} required />
-            <input type="text" name="cargo" placeholder="Cargo" value={formData.cargo} onChange={handleInputChange} required />
+
+            <input
+              type="text"
+              name="telefone"
+              placeholder="(71) 99999-9999"
+              value={formData.telefone}
+              onChange={handleInputChange}
+              autoComplete="tel"
+              required
+            />
+
+            <input
+              type="text"
+              name="cargo"
+              placeholder="Cargo"
+              value={formData.cargo}
+              onChange={handleInputChange}
+              required
+            />
+
           </div>
+
           <div className="input-group">
-            <input type="text" name="setor" placeholder="Setor" value={formData.setor} onChange={handleInputChange} required />
-            <button type="submit" disabled={loading}>
-              {loading ? 'Salvando...' : 'Cadastrar'}
+
+            <input
+              type="text"
+              name="setor"
+              placeholder="Setor"
+              value={formData.setor}
+              onChange={handleInputChange}
+              required
+            />
+
+            <button
+              type="submit"
+              disabled={saving}
+            >
+              {saving ? 'Cadastrando...' : 'Cadastrar Funcionário'}
             </button>
+
           </div>
+
         </form>
+
       </section>
 
       <section className="list-section">
-        <h3>Colaboradores Cadastrados</h3>
-        {loading && funcionarios.length === 0 ? (
-          <p>Carregando dados...</p>
+
+        <h3> Funcionários Cadastrados</h3>
+
+        {loading ? (
+
+          <p className="loading">
+            Carregando funcionários...
+          </p>
+
         ) : (
+
           <div className="table-responsive">
+
             <table className="funcionarios-table">
+
               <thead>
+
                 <tr>
                   <th>Nome</th>
                   <th>E-mail</th>
@@ -100,28 +199,50 @@ export default function Funcionarios() {
                   <th>Cargo</th>
                   <th>Setor</th>
                 </tr>
+
               </thead>
+
               <tbody>
+
                 {funcionarios.length > 0 ? (
+
                   funcionarios.map((func, index) => (
-                    <tr key={index}>
+
+                    <tr key={func.id || index}>
                       <td>{func.nome}</td>
                       <td>{func.email}</td>
                       <td>{func.telefone}</td>
                       <td>{func.cargo}</td>
                       <td>{func.setor}</td>
                     </tr>
+
                   ))
+
                 ) : (
+
                   <tr>
-                    <td colSpan="5" className="empty-state">Nenhum funcionário cadastrado ainda.</td>
+
+                    <td
+                      colSpan="5"
+                      className="empty-state"
+                    >
+                      Nenhum funcionário cadastrado.
+                    </td>
+
                   </tr>
+
                 )}
+
               </tbody>
+
             </table>
+
           </div>
+
         )}
+
       </section>
+
     </div>
   );
 }
