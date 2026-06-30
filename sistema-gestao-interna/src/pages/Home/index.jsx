@@ -1,68 +1,99 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getClientes } from '../../service/api';
+import api from '../../service/api';
 import './style.css';
 
 export default function Home() {
-  return (
-    <main className="home-container">
 
-      <header className="home-header">
+    const [clientes, setClientes] = useState(0);
+    const [funcionarios, setFuncionarios] = useState(0);
 
-        <h1> ERP Nexus</h1>
+    useEffect(() => {
+        carregarDashboard();
+    }, []);
 
-        <p>
-          Bem-vindo ao sistema de gestão interna da
-          <strong> TechNexus Solutions</strong>.
-        </p>
+    async function carregarDashboard() {
 
-      </header>
+        try {
 
-      <section className="welcome-card">
+            const listaClientes = await getClientes();
 
-        <h2>Seja Bem-vindo!</h2>
+            setClientes(listaClientes.length);
 
-        <p>
-          Gerencie clientes e funcionários de forma simples,
-          rápida e organizada através de uma plataforma moderna,
-          desenvolvida para centralizar todas as informações da empresa.
-        </p>
+            const response = await api.get('/funcionarios');
 
-      </section>
+            setFuncionarios(response.data.length);
 
-      <section className="home-content">
+        } catch (error) {
 
-        <div className="info-card">
+            console.log(error);
 
-          <div className="card-icon">
-            👥
-          </div>
+        }
 
-          <h3>Gestão de Clientes</h3>
+    }
 
-          <p>
-            Cadastre, consulte e acompanhe todos os clientes da empresa
-            em um único lugar, mantendo os dados sempre organizados.
-          </p>
+    return (
 
-        </div>
+        <main className="home-container">
 
-        <div className="info-card">
+            <section className="home-banner">
 
-          <div className="card-icon">
-            👨‍💼
-          </div>
+                <h1>Bem-vindo ao ERP Nexus</h1>
 
-          <h3>Gestão de Funcionários</h3>
+                <p>
+                    Sistema de Gestão Empresarial da TechNexus Solutions.
+                </p>
 
-          <p>
-            Organize colaboradores, cargos, setores e facilite
-            o gerenciamento interno da empresa.
-          </p>
+            </section>
 
-        </div>
+            <section className="stats">
 
-      </section>
+                <div className="stat-card">
 
-    </main>
-  );
+                    <h2>{clientes}</h2>
+
+                    <span>Clientes Cadastrados</span>
+
+                </div>
+
+                <div className="stat-card">
+
+                    <h2>{funcionarios}</h2>
+
+                    <span>Funcionários Cadastrados</span>
+
+                </div>
+
+            </section>
+
+            <section className="dashboard">
+
+                <div className="dashboard-card">
+
+                    <h3>Gestão de Clientes</h3>
+
+                    <p>
+                        Cadastre e consulte clientes rapidamente através do
+                        sistema ERP Nexus.
+                    </p>
+
+                </div>
+
+                <div className="dashboard-card">
+
+                    <h3>Gestão de Funcionários</h3>
+
+                    <p>
+                        Organize colaboradores, setores e cargos de forma
+                        simples e eficiente.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    );
+
 }
-

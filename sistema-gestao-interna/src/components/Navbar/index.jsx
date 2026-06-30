@@ -1,38 +1,45 @@
 import React from 'react';
-import './style.css'; // O arquivo de estilo que já está criado na sua pasta
+import './style.css';
 
 export default function Navbar({ currentView, setView }) {
   return (
-    <nav className="navbar">
+    <aside className="navbar">
+
       <div className="navbar-logo">
-        <strong>ERP Nexus</strong>
+        <h2>ERP Nexus</h2>
+        <span>Sistema de Gestão Empresarial</span>
       </div>
-      <ul className="navbar-links">
-        <li>
-          <button 
-            className={currentView === 'home' ? 'active' : ''} 
-            onClick={() => setView('home')}
-          >
-            Home
-          </button>
-        </li>
-        <li>
-          <button 
-            className={currentView === 'clientes' ? 'active' : ''} 
-            onClick={() => setView('clientes')}
-          >
-            Clientes
-          </button>
-        </li>
-        <li>
-          <button 
-            className={currentView === 'funcionarios' ? 'active' : ''} 
-            onClick={() => setView('funcionarios')}
-          >
-            Funcionários
-          </button>
-        </li>
-      </ul>
-    </nav>
+
+      <nav className="navbar-menu">
+
+        <button
+          className={currentView === 'home' ? 'active' : ''}
+          onClick={() => setView('home')}
+        >
+          Início
+        </button>
+
+        <button
+          className={currentView === 'clientes' ? 'active' : ''}
+          onClick={() => setView('clientes')}
+        >
+          Clientes
+        </button>
+
+        <button
+          className={currentView === 'funcionarios' ? 'active' : ''}
+          onClick={() => setView('funcionarios')}
+        >
+          Funcionários
+        </button>
+
+      </nav>
+
+      <div className="navbar-footer">
+        <p>ERP Nexus</p>
+        <small>Versão 1.0</small>
+      </div>
+
+    </aside>
   );
 }
