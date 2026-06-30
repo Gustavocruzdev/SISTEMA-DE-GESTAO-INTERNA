@@ -22,6 +22,6 @@ Projeto desenvolvido para a disciplina de [Nome da Disciplina].
 4. Acesse no navegador o endereço indicado (ex: `http://localhost:5173`).
 
 Integrantes do projetoP:
-Luiz Gustavo Caldas Cruz: Frontend
-Italo de Jesus Silva: Frontend
-Anderson Ferreira: Backend
+Luiz Gustavo Caldas Cruz: Frontend e backend
+Italo de Jesus Silva: Frontend e backend
+Anderson Ferreira: Frontend e backend
